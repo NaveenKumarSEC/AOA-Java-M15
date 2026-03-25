@@ -1,7 +1,9 @@
 
 # EX 5D Flower Planting.
-## DATE:
+## DATE:22-03-2026
+
 ## AIM:
+
 To write a Java program to for given constraints.
 You are given n gardens, labelled from 1 to n.
 
@@ -25,24 +27,90 @@ A valid flower assignment always exists
 
 <img width="177" height="292" alt="image" src="https://github.com/user-attachments/assets/36aa40cb-1cdd-4746-b1a6-fc51ce6e96aa" />
 
-## Algorithm
-1. 
-2. 
-3. 
-4.  
-5.   
+## Algorithm:
+
+1. Read the number of gardens **n** and number of paths **m**.
+2. Build an adjacency list to represent the bidirectional paths between gardens.
+3. Create an array `res[]` of size `n` to store the assigned flower types.
+4. For each garden:
+
+   * Check all its neighbours and mark the flower types used by those neighbours.
+   * Assign the **smallest flower type (1 to 4)** that is not used by its neighbours.
+5. Print the resulting flower assignment.
+6. Since each garden has at most 3 neighbours, at least one of the four flower types will always be available.     
 
 ## Program:
 ```
 /*
 Program to implement Reverse a String
-Developed by: 
-Register Number:  
+Developed by: Naveenkumar M
+Register Number:  212224230182
+```
+```
+import java.util.*;
+
+public class GardenFlowerPlanner {
+
+    public static int[] assignFlowers(int n, int[][] paths) {
+        @SuppressWarnings("unchecked")
+        List<Integer>[] adj = new ArrayList[n];
+        // Type Your Code Here.
+        for(int i=0;i<n;i++){
+            adj[i]=new ArrayList<>();
+        }
+        for(int[] path:paths){
+           int a = path[0] - 1;
+           int b = path[1] - 1; 
+           adj[a].add(b); 
+           adj[b].add(a);
+        }
+        int[] result = new int[n];
+        
+        for(int i=0;i<n;i++){
+            boolean[] visit = new boolean[5];
+            
+            for(int ne: adj[i]){
+                int a = result[ne];
+                if(a!=0){
+                    visit[a]=true;
+                }
+            }
+            for(int i1=1;i1<=4;i1++){
+                if(!visit[i1]){
+                    result[i]=i1;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt(); 
+        int m = sc.nextInt(); 
+
+        int[][] paths = new int[m][2];
+        for (int i = 0; i < m; i++) {
+            paths[i][0] = sc.nextInt();
+            paths[i][1] = sc.nextInt();
+        }
+        int[] result = assignFlowers(n, paths);
+
+        for (int flower : result) {
+            System.out.print(flower + " ");
+        }
+        System.out.println();
+    }
+}
+
 */
 ```
 
 ## Output:
 
+<img width="386" height="471" alt="image" src="https://github.com/user-attachments/assets/e68b76ee-0328-4255-8e58-cb015e791df9" />
 
 
 ## Result:
