@@ -1,7 +1,9 @@
 
 # EX 5C Graph coloring
-## DATE:
+## DATE:21-03-2026
+
 ## AIM:
+
 To write a Java program to for given constraints.
 Problem Description:
 In a hilly region, several radio towers are installed to provide communication services. However, due to signal interference, two adjacent towers (i.e., in communication range of each other) must not use the same frequency channel.
@@ -25,24 +27,86 @@ Otherwise, print "NO".
 <img width="182" height="440" alt="image" src="https://github.com/user-attachments/assets/b32078a2-c79d-4a25-88c4-e51144b5456f" />
 
 
-## Algorithm
-1. 
-2. 
-3. 
-4.  
-5.   
+## Algorithm:
+
+1. Read inputs: number of towers **N**, number of channels **M**, and number of edges **E**.
+2. Build an adjacency list to represent the undirected graph of tower communication range.
+3. Maintain a `color[]` array of size `N` initialized to 0 (uncolored).
+4. Use a **recursive backtracking function**:
+
+   * For each tower, try assigning a channel `1` to `M`.
+   * Before assigning, check using `isSafe()` that no adjacent tower has the same color.
+5. If assigning a color leads to a valid configuration for all towers → return **true**.
+6. If no color can be assigned for a tower → backtrack and try another color.
+7. If no assignment is possible → print **"NO"**, otherwise **"YES"**.    
 
 ## Program:
 ```
 /*
 Program to implement Reverse a String
-Developed by: 
-Register Number:  
+Developed by: Naveenkumar M
+Register Number: 212224230182
+```
+```
+import java.util.*;
+
+public class RadioTowerChannelAssignment {
+
+    public static boolean isColorable(List<List<Integer>> graph, int[] color, int node, int m, int n) {
+        //Write your code
+        if(node==n)return true;
+        for(int c=0;c<=m;c++){
+            if(isSafe(graph,color,node,c)){
+                color[node]=c;
+                if(isColorable(graph,color,node+1,m,n)) return true;
+                color[node]=0;
+            }
+        }
+        return false;
+    }
+  public static boolean isSafe(List<List<Integer>> graph, int[] color, int node, int c) {
+        //Write your code
+        for(int ne:graph.get(node)){
+            if(color[ne]==c)return false;
+        }
+        return true;
+    }
+    
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt(); // number of towers
+        int m = sc.nextInt(); // number of channels
+        int e = sc.nextInt(); // number of connections
+
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++)
+            graph.add(new ArrayList<>());
+
+        for (int i = 0; i < e; i++) {
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
+
+        int[] color = new int[n];
+
+        if (isColorable(graph, color, 0, m, n))
+            System.out.println("YES");
+        else
+            System.out.println("NO");
+
+        sc.close();
+    }
+}
+
 */
 ```
 
 ## Output:
 
+<img width="330" height="500" alt="image" src="https://github.com/user-attachments/assets/7818dd4d-2965-453e-bf06-d647fe019164" />
 
 
 ## Result:
